@@ -20,17 +20,18 @@ class Paster:
             inxx += indx + (1 if gap else 0)
             outxx += outdx + (1 if gap else 0)
 
-    def ui_corners(self, inyy, indy, indx1, indx2, outyy, outdy, outdx1, outdx2):
+    def ui_corners(self, inyy, indy, indx1, indx2, outyy, outdy, outdx1, outdx2, middle=True):
         self.paste(
             (0, inyy, indx1, inyy + indy),
             (0, outyy),
             (outdx1, outdy),
         )
-        self.paste(
-            (indx1 + 1, inyy, indx1 + 2, inyy + indy),
-            (outdx1 + 1, outyy),
-            (1, outdy),
-        )
+        if middle:
+            self.paste(
+                (indx1 + 1, inyy, indx1 + 2, inyy + indy),
+                (outdx1 + 1, outyy),
+                (1, outdy),
+            )
         self.paste(
             (indx1 + 3, inyy, indx1 + 3 + indx2, inyy + indy),
             (outdx1 + 3, outyy),
