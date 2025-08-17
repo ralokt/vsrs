@@ -1,4 +1,3 @@
-
 class Paster:
     def __init__(self, inim, outim):
         self.inim = inim
@@ -20,7 +19,9 @@ class Paster:
             inxx += indx + (1 if gap else 0)
             outxx += outdx + (1 if gap else 0)
 
-    def ui_corners(self, inyy, indy, indx1, indx2, outyy, outdy, outdx1, outdx2, middle=True):
+    def ui_corners(
+        self, inyy, indy, indx1, indx2, outyy, outdy, outdx1, outdx2, middle=True
+    ):
         self.paste(
             (0, inyy, indx1, inyy + indy),
             (0, outyy),

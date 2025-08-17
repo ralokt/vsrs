@@ -5,7 +5,7 @@ class VsScaleDimsCalculator:
     def _scale(self, dim):
         prod = dim * self.square_size
         scaled = prod // 16
-        if (prod % 16 >= 8):
+        if prod % 16 >= 8:
             scaled += 1
         return scaled
 

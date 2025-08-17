@@ -1,4 +1,3 @@
-
 from PIL import Image
 from .dims import VsSkinOffsetCalculator
 from .paster import Paster
@@ -61,7 +60,7 @@ def rescale(inim, outpx, bgc):
         1,
         outcalc.msx_l_w(),
         outcalc.msx_r_w(),
-        middle=False
+        middle=False,
     )
     paster.ui_corners(
         incalc.msx_m_y(),
@@ -82,7 +81,7 @@ def rescale(inim, outpx, bgc):
         1,
         outcalc.msx_l_w(),
         outcalc.msx_r_w(),
-        middle=False
+        middle=False,
     )
     paster.ui_corners(
         incalc.msx_b_y(),
@@ -112,4 +111,3 @@ def rescale(inim, outpx, bgc):
     paster.paste(inbox, outcoords, outdims)
 
     return outim
-
