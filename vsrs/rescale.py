@@ -103,5 +103,13 @@ def rescale(inim, outpx, bgc):
     outdims = (outcalc.timer_w(), outcalc.timer_h())
     paster.paste(inbox, outcoords, outdims)
 
+    # bg pixel
+    xx = incalc.timer_x() + incalc.timer_w() + 1
+    yy = incalc.timer_y()
+    inbox = (xx, yy, xx + 1, yy + 1)
+    outcoords = (outcalc.timer_x() + outcalc.timer_w() + 1, outcalc.timer_y())
+    outdims = (1, 1)
+    paster.paste(inbox, outcoords, outdims)
+
     return outim
 
