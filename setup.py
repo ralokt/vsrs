@@ -12,7 +12,7 @@ setup(
     long_description_content_type="text/markdown",
     license="MIT",
     author="Thomas Kolar",
-    author_email="thomaskolar90@gmail.com",
+    author_email="contact.ralokt.at",
     url="https://github.com/ralokt/vsrs/",
     packages=["vsrs"],
     entry_points={
