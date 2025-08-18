@@ -15,8 +15,8 @@ def rescale(inim, outpx, bgc):
     paster = Paster(inim, outim)
 
     # squares
-    paster.row(9, 0, inpx, inpx, 0, outpx, outpx, gap=False)
-    paster.row(8, inpx, inpx, inpx, outpx, outpx, outpx, gap=False)
+    paster.row(9, 0, inpx, inpx, 0, outpx, outpx, ingap=0, outgap=0)
+    paster.row(8, inpx, inpx, inpx, outpx, outpx, outpx, ingap=0, outgap=0)
 
     # timer numbers
     paster.row(
@@ -101,6 +101,19 @@ def rescale(inim, outpx, bgc):
     outcoords = (outcalc.timer_x(), outcalc.timer_y())
     outdims = (outcalc.timer_w(), outcalc.timer_h())
     paster.paste(inbox, outcoords, outdims)
+    paster.row(
+        3,
+        incalc.timer_y() + incalc.timer_pad(),
+        incalc.rednum_w(),
+        incalc.rednum_h(),
+        outcalc.timer_y() + outcalc.timer_pad(),
+        outcalc.rednum_w(),
+        outcalc.rednum_h(),
+        inxx=incalc.timer_x() + incalc.timer_pad(),
+        outxx=outcalc.timer_x() + outcalc.timer_pad(),
+        ingap=incalc.timer_pad(),
+        outgap=outcalc.timer_pad(),
+    )
 
     # bg pixel
     xx = incalc.timer_x() + incalc.timer_w() + 1

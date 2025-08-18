@@ -9,15 +9,26 @@ class Paster:
             outcoords,
         )
 
-    def row(self, count, inyy, indx, indy, outyy, outdx, outdy, gap=True):
-        inxx = 0
-        outxx = 0
+    def row(
+        self,
+        count,
+        inyy,
+        indx,
+        indy,
+        outyy,
+        outdx,
+        outdy,
+        ingap=1,
+        outgap=1,
+        inxx=0,
+        outxx=0,
+    ):
         inyy2 = inyy + indy
         for ii in range(count):
             inbox = (inxx, inyy, inxx + indx, inyy2)
             self.paste(inbox, (outxx, outyy), (outdx, outdy))
-            inxx += indx + (1 if gap else 0)
-            outxx += outdx + (1 if gap else 0)
+            inxx += indx + ingap
+            outxx += outdx + outgap
 
     def ui_corners(
         self, inyy, indy, indx1, indx2, outyy, outdy, outdx1, outdx2, middle=True
