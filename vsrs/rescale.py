@@ -154,4 +154,12 @@ def rescale(inim, outpx, bgc, ext = False):
     outdims = (outcalc.rednum_small_w(), outcalc.rednum_small_h())
     paster.paste(inbox, outcoords, outdims)
 
+    #closed numbers, wasted flag
+    paster.row(
+        9,
+        incalc.closed_num_y(), inpx, inpx,
+        outcalc.closed_num_y(), outpx, outpx,
+        ingap = 0, outgap = 0
+    )
+
     return outim
