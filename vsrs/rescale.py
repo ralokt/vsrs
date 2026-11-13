@@ -162,4 +162,15 @@ def rescale(inim, outpx, bgc, ext = False):
         ingap = 0, outgap = 0
     )
 
+    #small timer numbers (tenths)
+    paster.row(
+        10,
+        incalc.rednum_small_y(),
+        incalc.rednum_small_w(),
+        incalc.rednum_small_h(),
+        outcalc.rednum_small_y(),
+        outcalc.rednum_small_w(),
+        outcalc.rednum_small_h(),
+    )
+
     return outim
