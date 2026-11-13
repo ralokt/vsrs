@@ -16,6 +16,10 @@ def parse_args():
         "-b", "--background", default="#00ff00", help="background color for skin"
     )
     parser.add_argument(
+        "-x", "--vsweep_extended", action="store_true",
+        help="generate an extended skin for vsweep (additional vsweep-specific graphics include extended timer, small timer digits, closed numbers, wasted flag and colored smileys)"
+    )
+    parser.add_argument(
         "input",
         help="input file to be scaled or html color code formatted like #rrggbb. If a color code is passed, generate a template for that output size using this as a foreground color",
     )
@@ -27,7 +31,7 @@ def parse_args():
 
 
 def handle_im(args, im):
-    outim = rescale(im, args.output_size, args.background)
+    outim = rescale(im, args.output_size, args.background, args.vsweep_extended)
     if args.output:
         outim.save(args.output)
     if args.show:
@@ -40,7 +44,7 @@ def main():
         calc = VsSkinOffsetCalculator(16)
         im = Image.new(
             "RGB",
-            (144, calc.msx_h()),
+            (144, (calc.vsext_h() if args.vsweep_extended else calc.msx_h())),
             args.input,
         )
         return handle_im(args, im)

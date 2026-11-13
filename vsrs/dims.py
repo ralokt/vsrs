@@ -50,6 +50,15 @@ class VsScaleDimsCalculator:
 
     def timer_w(self):
         return 4 * self.timer_pad() + 3 * self.rednum_w()
+            
+    def rednum_small_h(self):
+        return self._scale(14)
+
+    def rednum_small_w(self):
+        return self._scale(7)
+
+    def timer_ext_w(self):
+        return self.timer_w() + self.timer_pad() + self.rednum_small_w()
 
 
 class VsSkinOffsetCalculator(VsScaleDimsCalculator):
@@ -85,3 +94,24 @@ class VsSkinOffsetCalculator(VsScaleDimsCalculator):
 
     def timer_y(self):
         return self.msx_t_y()
+
+    def timer_ext_x(self):
+        return self.timer_x() + self.timer_w() + 3
+
+    def timer_ext_tenth_x(self):
+        return self.timer_ext_x() + 3 * self.rednum_w() + 3 * self.timer_pad()
+
+    def timer_ext_tenth_y(self):
+        return self.timer_y() + self.timer_pad() + self.rednum_h() - self.rednum_small_h()
+
+    def closed_num_y(self):
+        return self.msx_h() + 1
+
+    def rednum_small_y(self):
+        return self.closed_num_y() + self.square_size + 1
+
+    def smiley_ext_y(self):
+        return self.rednum_small_y() + self.rednum_small_h() + 1
+
+    def vsext_h(self):
+        return self.smiley_ext_y() + self.smiley_size()

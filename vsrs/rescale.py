@@ -3,13 +3,13 @@ from .dims import VsSkinOffsetCalculator
 from .paster import Paster
 
 
-def rescale(inim, outpx, bgc):
+def rescale(inim, outpx, bgc, ext = False):
     inpx = inim.width // 9
     incalc = VsSkinOffsetCalculator(inpx)
     outcalc = VsSkinOffsetCalculator(outpx)
     outim = Image.new(
         "RGB",
-        (outpx * 9, outcalc.msx_h()),
+        (outpx * 9, (outcalc.vsext_h() if ext else outcalc.msx_h())),
         bgc,
     )
     paster = Paster(inim, outim)
@@ -122,5 +122,66 @@ def rescale(inim, outpx, bgc):
     outcoords = (outcalc.timer_x() + outcalc.timer_w() + 1, outcalc.timer_y())
     outdims = (1, 1)
     paster.paste(inbox, outcoords, outdims)
+
+    if not ext:
+        return outim
+
+    #timer with tenths
+    xx = incalc.timer_ext_x()
+    yy = incalc.timer_y()
+    inbox = (xx, yy, xx + incalc.timer_ext_w(), yy + incalc.timer_h())
+    outcoords = (outcalc.timer_ext_x(), outcalc.timer_y())
+    outdims = (outcalc.timer_ext_w(), outcalc.timer_h())
+    paster.paste(inbox, outcoords, outdims)
+    paster.row(
+        3,
+        incalc.timer_y() + incalc.timer_pad(),
+        incalc.rednum_w(),
+        incalc.rednum_h(),
+        outcalc.timer_y() + outcalc.timer_pad(),
+        outcalc.rednum_w(),
+        outcalc.rednum_h(),
+        inxx=incalc.timer_ext_x() + incalc.timer_pad(),
+        outxx=outcalc.timer_ext_x() + outcalc.timer_pad(),
+        ingap=incalc.timer_pad(),
+        outgap=outcalc.timer_pad(),
+    )
+    #small tenth digit of extended timer
+    xx = incalc.timer_ext_tenth_x()
+    yy = incalc.timer_ext_tenth_y()
+    inbox = (xx, yy, xx + incalc.rednum_small_w(), yy + incalc.rednum_small_h())
+    outcoords = (outcalc.timer_ext_tenth_x(), outcalc.timer_ext_tenth_y())
+    outdims = (outcalc.rednum_small_w(), outcalc.rednum_small_h())
+    paster.paste(inbox, outcoords, outdims)
+
+    #closed numbers, wasted flag
+    paster.row(
+        9,
+        incalc.closed_num_y(), inpx, inpx,
+        outcalc.closed_num_y(), outpx, outpx,
+        ingap = 0, outgap = 0
+    )
+
+    #small timer numbers (tenths)
+    paster.row(
+        10,
+        incalc.rednum_small_y(),
+        incalc.rednum_small_w(),
+        incalc.rednum_small_h(),
+        outcalc.rednum_small_y(),
+        outcalc.rednum_small_w(),
+        outcalc.rednum_small_h(),
+    )
+
+    #green and red smileys
+    paster.row(
+        5,
+        incalc.smiley_ext_y(),
+        incalc.smiley_size(),
+        incalc.smiley_size(),
+        outcalc.smiley_ext_y(),
+        outcalc.smiley_size(),
+        outcalc.smiley_size(),
+    )
 
     return outim
