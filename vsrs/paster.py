@@ -1,3 +1,5 @@
+from PIL import Image
+
 class Paster:
     def __init__(self, inim, outim):
         self.inim = inim
@@ -5,7 +7,7 @@ class Paster:
 
     def paste(self, inbox, outcoords, outdims):
         self.outim.paste(
-            self.inim.crop(inbox).resize(outdims),
+            self.inim.crop(inbox).resize(outdims, Image.NEAREST),
             outcoords,
         )
 
