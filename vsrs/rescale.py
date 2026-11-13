@@ -173,4 +173,15 @@ def rescale(inim, outpx, bgc, ext = False):
         outcalc.rednum_small_h(),
     )
 
+    #green and red smileys
+    paster.row(
+        5,
+        incalc.smiley_ext_y(),
+        incalc.smiley_size(),
+        incalc.smiley_size(),
+        outcalc.smiley_ext_y(),
+        outcalc.smiley_size(),
+        outcalc.smiley_size(),
+    )
+
     return outim
