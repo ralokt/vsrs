@@ -9,79 +9,100 @@ class VsScaleDimsCalculator:
             scaled += 1
         return scaled
 
-    def rednum_h(self):
+    def rd_h(self):
         return self._scale(21)
 
-    def rednum_w(self):
+    def rd_w(self):
         return self._scale(11)
 
-    def smiley_size(self):
+    def sml_d(self):
         return self._scale(26)
 
-    def top_border_h(self):
-        return 56
-
-    def left_border_w(self):
-        return 12
-
-    def msx_l_w(self):
+    def uil_w(self):
         return self._scale(12)
 
-    def msx_r_w(self):
+    def uir_w(self):
         return self._scale(12)
 
-    def msx_t_h(self):
+    def uit_h(self):
         return self._scale(11)
 
-    def msx_m_h(self):
+    def uim_h(self):
         return self._scale(11)
 
-    def msx_b_h(self):
+    def uib_h(self):
         return self._scale(12)
 
-    def top_border_without_bottom_border_h(self):
-        return self.top_border_h() - self._scale(11)
-
-    def timer_pad(self):
+    def cr_p(self):
         return self._scale(2)
 
-    def timer_h(self):
-        return 2 * self.timer_pad() + self.rednum_h()
+    def cr_h(self):
+        return 2 * self.cr_p() + self.rd_h()
 
-    def timer_w(self):
-        return 4 * self.timer_pad() + 3 * self.rednum_w()
+    def cr_w(self):
+        return 4 * self.cr_p() + 3 * self.rd_w()
+
+    def rds_h(self):
+        return self._scale(14)
+
+    def rds_w(self):
+        return self._scale(7)
+
+    def vcrre_w(self):
+        return self.cr_w() + self.cr_p() + self.rds_w()
 
 
 class VsSkinOffsetCalculator(VsScaleDimsCalculator):
-    def row2_y(self):
+    def sq2_y(self):
         return self.square_size
 
-    def rednum_y(self):
-        return self.row2_y() + self.square_size + 1
+    def rd_y(self):
+        return self.sq2_y() + self.square_size + 1
 
-    def smiley_y(self):
-        return self.rednum_y() + self.rednum_h() + 1
+    def sml_y(self):
+        return self.rd_y() + self.rd_h() + 1
 
-    def msx_l_x(self):
+    def uil_x(self):
         return 0
 
-    def msx_r_x(self):
-        return self.msx_l_w() + 3
+    def uir_x(self):
+        return self.uil_w() + 3
 
-    def msx_t_y(self):
-        return self.smiley_y() + self.smiley_size() + 1
+    def uit_y(self):
+        return self.sml_y() + self.sml_d() + 1
 
-    def msx_m_y(self):
-        return self.msx_t_y() + self.msx_t_h() + 3
+    def uim_y(self):
+        return self.uit_y() + self.uit_h() + 3
 
-    def msx_b_y(self):
-        return self.msx_m_y() + self.msx_m_h() + 3
+    def uib_y(self):
+        return self.uim_y() + self.uim_h() + 3
 
-    def msx_h(self):
-        return self.msx_b_y() + self.msx_b_h()
+    def skin_h(self):
+        return self.uib_y() + self.uib_h()
 
-    def timer_x(self):
-        return self.msx_r_x() + self.msx_r_w() + 1
+    def cr_x(self):
+        return self.uir_x() + self.uir_w() + 1
 
-    def timer_y(self):
-        return self.msx_t_y()
+    def cr_y(self):
+        return self.uit_y()
+
+    def vcrre_x(self):
+        return self.cr_x() + self.cr_w() + 3
+
+    def vcrrt_x(self):
+        return self.vcrre_x() + 3 * self.rd_w() + 3 * self.cr_p()
+
+    def vcrrt_y(self):
+        return self.cr_y() + self.cr_p() + self.rd_h() - self.rds_h()
+
+    def cn_y(self):
+        return self.skin_h() + 1
+
+    def rds_y(self):
+        return self.cn_y() + self.square_size + 1
+
+    def vsmle_y(self):
+        return self.rds_y() + self.rds_h() + 1
+
+    def vsext_h(self):
+        return self.vsmle_y() + self.sml_d()

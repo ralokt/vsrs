@@ -4,6 +4,11 @@ from PIL import Image, ImageChops
 from vsrs.rescale import rescale
 from vsrs.dims import VsSkinOffsetCalculator
 
+# constructing a simple object in place of incoming commandline args to be passed to `rescale`
+from collections import namedtuple
+
+Args = namedtuple("Args", "output_size background vsweep_extended")
+
 
 @pytest.fixture
 def simple_skin(replay_path):
@@ -45,25 +50,31 @@ def image_eq(im1, im2):
 
 
 def test_dimensions(simple_skin, simple_24px_skin, simple_33px_skin):
-    assert image_eq(rescale(simple_skin, 24, "#0000ff"), simple_24px_skin)
-    assert not image_eq(rescale(simple_skin, 24, "#00ff00"), simple_24px_skin)
-    assert image_eq(rescale(simple_skin, 33, "#0000ff"), simple_33px_skin)
-    assert not image_eq(rescale(simple_skin, 33, "#00ff00"), simple_33px_skin)
-    assert image_eq(rescale(simple_24px_skin, 33, "#0000ff"), simple_33px_skin)
-    assert image_eq(rescale(simple_33px_skin, 24, "#0000ff"), simple_24px_skin)
+    assert image_eq(rescale(Args(24, "#0000ff", False), simple_skin), simple_24px_skin)
+    assert not image_eq(
+        rescale(Args(24, "#00ff00", False), simple_skin), simple_24px_skin
+    )
+    assert image_eq(rescale(Args(33, "#0000ff", False), simple_skin), simple_33px_skin)
+    assert not image_eq(
+        rescale(Args(33, "#00ff00", False), simple_skin), simple_33px_skin
+    )
+    assert image_eq(
+        rescale(Args(33, "#0000ff", False), simple_24px_skin), simple_33px_skin
+    )
+    assert image_eq(
+        rescale(Args(24, "#0000ff", False), simple_33px_skin), simple_24px_skin
+    )
 
 
 def test_scaling_5(coloursonly_skin, ref_32px_nn_5):
-    scaled = rescale(coloursonly_skin, 32, "#0000ff")
+    scaled = rescale(Args(32, "#0000ff", False), coloursonly_skin)
     scaled_5 = scaled.crop((160, 0, 160 + 32, 32))
     assert image_eq(scaled_5, ref_32px_nn_5)
 
 
 def test_scaling_timer(coloursonly_skin, ref_37px_nn_timer):
     calc = VsSkinOffsetCalculator(37)
-    scaled = rescale(coloursonly_skin, 37, "#0000ff")
-    xx, yy = calc.timer_x(), calc.timer_y()
-    scaled_timer = scaled.crop(
-        (xx, yy, xx + calc.timer_w(), yy + calc.timer_h())
-    )
+    scaled = rescale(Args(37, "#0000ff", False), coloursonly_skin)
+    xx, yy = calc.cr_x(), calc.cr_y()
+    scaled_timer = scaled.crop((xx, yy, xx + calc.cr_w(), yy + calc.cr_h()))
     assert image_eq(scaled_timer, ref_37px_nn_timer)
