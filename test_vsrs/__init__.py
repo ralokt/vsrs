@@ -62,8 +62,8 @@ def test_scaling_5(coloursonly_skin, ref_32px_nn_5):
 def test_scaling_timer(coloursonly_skin, ref_37px_nn_timer):
     calc = VsSkinOffsetCalculator(37)
     scaled = rescale(coloursonly_skin, 37, "#0000ff")
-    xx, yy = calc.timer_x(), calc.timer_y()
+    xx, yy = calc.cr_x(), calc.cr_y()
     scaled_timer = scaled.crop(
-        (xx, yy, xx + calc.timer_w(), yy + calc.timer_h())
+        (xx, yy, xx + calc.cr_w(), yy + calc.cr_h())
     )
     assert image_eq(scaled_timer, ref_37px_nn_timer)
